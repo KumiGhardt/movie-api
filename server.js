@@ -4,7 +4,8 @@ const http = require('http'),
 
 http.createServer((request, response) => {
     let addr = request.url,
-        q = url.parse(addr, true),
+        baseURL = 'http://' + request.headers.host + '/';
+    q = new URL(addr, baseURL),
         filePath = '';
 
     fs.appendFile('log.txt', 'URL: ' + addr + '\nTimestamp: ' + new Date() + '\n\n', (err) => {
@@ -34,3 +35,5 @@ http.createServer((request, response) => {
     });
 
 }).listen(8080);
+
+console.log('My test server is running on Port 8080.');

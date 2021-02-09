@@ -16,3 +16,15 @@ Timestamp: Mon Feb 08 2021 21:35:47 GMT+0100 (Central European Standard Time)
 URL: /favicon.ico
 Timestamp: Mon Feb 08 2021 21:35:47 GMT+0100 (Central European Standard Time)
 
+URL: /
+Timestamp: Tue Feb 09 2021 14:13:52 GMT+0100 (Central European Standard Time)
+
+URL: /favicon.ico
+Timestamp: Tue Feb 09 2021 14:13:52 GMT+0100 (Central European Standard Time)
+
+URL: /documentation
+Timestamp: Tue Feb 09 2021 14:13:59 GMT+0100 (Central European Standard Time)
+
+URL: /favicon.ico
+Timestamp: Tue Feb 09 2021 14:13:59 GMT+0100 (Central European Standard Time)
+
