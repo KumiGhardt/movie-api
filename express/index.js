@@ -7,7 +7,7 @@ const app = express();
 let topMovies = [{
         title: 'Gone with the Wind',
         stars: ['Clark Gable', 'Vivien Leigh'],
-        director:'Victor Fleming', 
+        director: 'Victor Fleming',
         bio: ['Born: February 23, 1889 in La Cañada, California, USA', 'Died: January 6, 1949 (age 59) in Cottonwood, Arizona, USA'],
         year: 1939,
         rating: 8.1,
@@ -17,7 +17,7 @@ let topMovies = [{
     {
         title: 'The Sound of Music',
         stars: ['Julie Andrews', 'Christopher Plummer'],
-        director:'Robert Wise', 
+        director: 'Robert Wise',
         bio: ['Born: September 10, 1914 in Winchester, Indiana, USA', 'Died: September 14, 2005 (age 91) in Los Angeles, California, USA'],
         year: 1965,
         rating: 8.0,
@@ -27,12 +27,12 @@ let topMovies = [{
     {
         title: 'Black Panther',
         stars: ['Chadwick Boseman', 'Michael B. Jordan'],
-        director:'Ryan Coogler', 
+        director: 'Ryan Coogler',
         bio: ['Born: August 25, 1972 in London, England, UK'],
         year: 2018,
         rating: 7.3,
         genre: ['Action', 'Adventure', 'SciFi'],
-        sysnopsis: 'Prince T\'Challa returns home to the reclusive, technologically advanced African nation of Wakanda to serve as his country\'s new king. However, T\'Challa soon finds that he is challenged for the throne from factions within his own country. When two foes conspire to destroy Wakanda, the hero known as Black Panther must team up with C.I.A. agent Everett K. Ross and members of the Dora Milaje, Wakandan special forces, to prevent Wakanda from being dragged into a world war. '
+        synopsis: 'Prince T\'Challa returns home to the reclusive, technologically advanced African nation of Wakanda to serve as his country\'s new king. However, T\'Challa soon finds that he is challenged for the throne from factions within his own country. When two foes conspire to destroy Wakanda, the hero known as Black Panther must team up with C.I.A. agent Everett K. Ross and members of the Dora Milaje, Wakandan special forces, to prevent Wakanda from being dragged into a world war. '
     },
     {
         title: 'Pride & Prejudice',
@@ -47,7 +47,7 @@ let topMovies = [{
     {
         title: 'The Lord of the Rings: The Fellowship of the Ring',
         stars: ['Elijah Wood', 'Ian McKellen'],
-        director: 'Peter Jackson', 
+        director: 'Peter Jackson',
         bio: ['Born: October 31, 1961 in Pukerua Bay, North Island, New Zealand'],
         year: 2001,
         rating: 8.8,
@@ -58,7 +58,7 @@ let topMovies = [{
     {
         title: 'Breakfast at Tiffany\'s',
         stars: ['Audrey Hepburn'],
-        director:'Blake Edwards',
+        director: 'Blake Edwards',
         bio: ['Born: July 26, 1922 in Tulsa, Oklahoma, USA', 'Died: December 15, 2010 (age 88) in Santa Monica, California, USA'],
         year: 1961,
         rating: 7.6,
@@ -69,7 +69,7 @@ let topMovies = [{
     {
         title: 'The Lord of the Rings: The Two Towers',
         stars: ['Elijah Wood', 'Ian McKellen'],
-        director:'Peter Jackson', 
+        director: 'Peter Jackson',
         bio: ['Born: October 31, 1961 in Pukerua Bay, North Island, New Zealand'],
         year: 2002,
         rating: 8.7,
@@ -80,7 +80,7 @@ let topMovies = [{
     {
         title: 'The Lord of the Rings: The Return of the King',
         stars: ['Elijah Wood', 'Ian McKellen'],
-        director:'Peter Jackson', 
+        director: 'Peter Jackson',
         bio: ['Born: October 31, 1961 in Pukerua Bay, North Island, New Zealand'],
         year: 2003,
         rating: 8.9,
@@ -91,7 +91,7 @@ let topMovies = [{
     {
         title: 'Der Untergang',
         stars: ['Bruno Ganz', 'Alexandra Maria Lara', 'Ulrich Matthes'],
-        director:'Oliver Hirschbiegel', 
+        director: 'Oliver Hirschbiegel',
         bio: ['Born: December 29, 1957 in Hamburg, Germany'],
         year: 2003,
         rating: 8.2,
@@ -102,7 +102,7 @@ let topMovies = [{
     {
         title: 'Im Keller',
         stars: ['Friz Lang', 'Manfred Ellinger', 'Alfreda Klebinger'],
-        director: 'Ulrich Seidl', 
+        director: 'Ulrich Seidl',
         bio: ['Born: November 24, 1952 in Vienna, Austria'],
         year: 2014,
         rating: 6.7,
@@ -137,12 +137,14 @@ app.get('/users', (req, res) => {
 //
 // Gets the list of data about ALL movies
 app.get('/movies/all', (req, res) => {
-    res.send('Successful GET request returning data on all the movies');
+    res.json(topMovies);
 });
 
-// Gets the data about a single movie, by name
+// Gets the data about a single movie, by name -- does not show name of movie in the preview so does not work
 app.get('/movies/:title', (req, res) => {
-    res.send('Successful GET request returning data on the details on one movie');
+    res.json(topMovies.find((title) => {
+        return topMovies.title === req.params.title
+    }));
 });
 
 //Gets the data about a genre
@@ -156,7 +158,7 @@ app.get('/movies/:director', (req, res) => {
 });
 
 //allows new users to register - - SEEMINGLY THIS ISNT WORKING
-app.post('/users', (req, res) => {
+app.post('/users/:registration', (req, res) => {
     res.send('Successful POST request updating user details');
 });
 
