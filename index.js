@@ -140,46 +140,46 @@ app.get('/movies/all', (req, res) => {
     res.json(topMovies);
 });
 
-// Gets the data about a single movie, by name -- does not show name of movie in the preview so does not work
-app.get('/movies/:title', (req, res) => {
+// Gets the data about a single movie, by name 
+app.get('/movies/title', (req, res) => {
     res.json(topMovies.find((title) => {
         return topMovies.title === req.params.title
     }));
 });
 
 //Gets the data about a genre
-app.get('/movies/:title/:genre', (req, res) => {
+app.get('/movies/:title/genre', (req, res) => {
     res.send('Successful GET request returning data on the details on one genre');
 });
 
-//gets data about director - SEEMINGLY THIS ISNT WORKING
+//gets data about director 
 app.get('/movies/:director', (req, res) => {
     res.send('Successful GET request returning data on the details on one director and his titles');
 });
 
-//allows new users to register - - SEEMINGLY THIS ISNT WORKING
+//allows new users to register 
 app.post('/users/:registration', (req, res) => {
     res.send('Successful POST request updating user details');
 });
 
-//allows users to update info: username - - SEEMINGLY THIS ISNT WORKING
+//allows users to update info: username 
 app.put('/users/', (req, res) => {
     res.send('Successful PUT request updating user details');
 });
 
-//adds data to users favourite movies - - SEEMINGLY THIS ISNT WORKING
+//adds data to users favourite movies 
 
 app.put('/users/:movies', (req, res) => {
     res.send('Successful PUT request updating user details');
 });
 
-//removes data from users favourite movies by title - SEEMINGLY THIS ISNT WORKING
+//removes data from users favourite movies by title 
 app.delete('/user/:title', (req, res) => {
     res.send('Successful DELETE request deleting movie data from users favourites');
 });
 
 
-//delete user - SEEMINGLY THIS ISNT WORKING
+//delete user 
 app.delete('/user/:user/:email', (req, res) => {
     res.send('Successful DELETE request deleting the users email');
 });
