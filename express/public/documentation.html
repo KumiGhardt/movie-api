@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gernhardts Movie API</title>
+</head>
+
+<body>
+
+    <h4>OBJECTIVE</h4>
+    <p>
+        To build the server­side component of a “movies” web application. The web application will
+        provide users with access to information about different movies, directors, and genres. Users
+        will be able to sign up, update their personal information, and create a list of their favorite
+        movies.
+    </p>
+
+
+    <h4>Technical Requirements</h4>
+
+    <table class="url_endpoints">
+        <tr>
+            <th>Request</th>
+            <th>URL</th>
+            <th>HTTP Method</th>
+            <th>Request body data format</th>
+            <th>Response body data format</th>
+        </tr>
+        <tr>
+            <td>Return a list of ALL movies to the user</td>
+            <td>/movies/[all]</td>
+            <td>GET</td>
+            <td>None</td>
+            <td>
+                A JSON object holding data about ALL movies available to the user
+            </td>
+        </tr>
+        <tr>
+            <td>Return data (description, genre, director, image URL, whether it’s featured or not) about a single movie
+                by
+                title to the user</td>
+            <td>/movies</td>
+            <td>GET</td>
+            <td>None</td>
+            <td>
+                a JSON object holding data about a single movie by title like this:
+                {
+                title: 'The Lord of the Rings: The Fellowship of the Ring',
+                stars: ['Elijah Wood', 'Ian McKellen'],
+                director: ['Peter Jackson', 'Born: October 31, 1961 in Pukerua Bay, North Island, New Zealand']
+                year: 2001,
+                rating: 8.8
+                genre: ['Action', 'Adventure', 'Drama', 'Fantasy'],
+                bio: 'A meek Hobbit from the Shire and eight companions set out on a journey to destroy the powerful One
+                Ring and save Middle-earth from the Dark Lord Sauron.'
+                },
+
+            </td>
+        </tr>
+        <tr>
+            <td>Return data about a genre (description) by name/title (e.g., “Thriller”)</td>
+            <td>/movies/[title]/[genre]</td>
+            <td>GET</td>
+            <td>None</td>
+            <td>
+                a JSON object holding data about a single movie's genre by title like this:
+                {
+                title: 'The Lord of the Rings: The Fellowship of the Ring',
+                genre: ['Action', 'Adventure', 'Drama', 'Fantasy'],
+                },
+            </td>
+        </tr>
+        <tr>
+            <td>Return data about a director (bio, birth year, death year) by name</td>
+            <td>/movies/[director]</td>
+            <td>GET</td>
+            <td>None</td>
+            <td>
+                a JSON object holding data about a director and his bio by name like this:
+                {
+                director: []
+                },
+            </td>
+        </tr>
+        <tr>
+            <td>Allow new users to register</td>
+            <td>/users/[registration]</td>
+            <td>POST</td>
+            <td></td>
+            <td></td>
+        </tr>
+
+        <tr>
+            <td>Allow users to update their user info (username)</td>
+            <td>/users</td>
+            <td>PUT</td>
+            <td>
+                A JSON object holding data about the user info to update, structured like:
+                {
+                name : "New Username",
+                email: newusername@email.com
+                }
+            </td>
+            <td>
+                A text message indicating the user info has been updated sucessfully.
+            </td>
+        </tr>
+        <tr>
+            <td>Allow users to add a movie to their list of favorites (showing only a text that a movie has been
+                added—more
+                on this later)</td>
+            <td>users/[movies]</td>
+            <td>PUT</td>
+            <td>
+                A JSON object holding data about the user info to add, structured like:
+                {
+                name : "User",
+                movies : {
+                title: '',
+                stars: []
+                }
+                }
+            </td>
+            <td>
+                A text message indicating the movie was added.
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Allow users to remove a movie from their list of favorites (showing only a text that a movie has been
+                removed—more on this later)
+            </td>
+            <td>users/[title]</td>
+            <td>DELETE</td>
+            <td>None</td>
+            <td>
+                A text message indicating the movie was removed
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Allow existing users to deregister (showing only a text that a user email has been removed—more on this
+                later)
+            </td>
+            <td>users/[email]</td>
+            <td>DELETE</td>
+            <td>None</td>
+            <td>
+                A text message indicating that the user has been deleted
+            </td>
+        </tr>
+
+    </table>
+
+</body>
+
+</html>
