@@ -126,6 +126,7 @@ app.get('/', (req, res) => {
     res.send('Welcome to my movie index');
 });
 
+// Gets the list of data about ALL movies
 app.get('/movies', (req, res) => {
     res.json(topMovies);
 });
@@ -134,11 +135,6 @@ app.get('/users', (req, res) => {
     res.json(users)
 });
 
-//
-// Gets the list of data about ALL movies
-app.get('/movies/all', (req, res) => {
-    res.json(topMovies);
-});
 
 // Gets the data about a single movie, by name 
 app.get('/movies/title', (req, res) => {
