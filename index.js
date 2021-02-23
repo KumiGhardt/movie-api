@@ -28,7 +28,7 @@ let topMovies = [{
         title: 'Black Panther',
         stars: ['Chadwick Boseman', 'Michael B. Jordan'],
         director: 'Ryan Coogler',
-        bio: ['Born: August 25, 1972 in London, England, UK'],
+        bio: ['Born: May 23, 1986 in Oakland, California, USA'],
         year: 2018,
         rating: 7.3,
         genre: ['Action', 'Adventure', 'SciFi'],
