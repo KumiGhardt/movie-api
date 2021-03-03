@@ -98,7 +98,7 @@
 
         <tr>
             <td>Allow users to update their user info (username)</td>
-            <td>/users</td>
+            <td>/users/Username</td>
             <td>PUT</td>
             <td>
                 A JSON object holding data about the user info to update, structured like:
@@ -120,7 +120,7 @@
             <td>Allow users to add a movie to their list of favorites (showing only a text that a movie has been
                 added—more
                 on this later)</td>
-            <td>users/[movies]</td>
+            <td>/users/Username/Movies/MovieID'</td>
             <td>PUT</td>
             <td>
                 A JSON object holding data about the user info to add, structured like:
@@ -153,7 +153,7 @@
                 Allow existing users to deregister (showing only a text that a user email has been removed—more on this
                 later)
             </td>
-            <td>users/[email]</td>
+            <td>users/[username]</td>
             <td>DELETE</td>
             <td>None</td>
             <td>

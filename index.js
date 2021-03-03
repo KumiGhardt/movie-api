@@ -182,19 +182,25 @@ app.get('/movies/:Title', (req, res) => {
       });
   });
 
-  /******************* 
-//Gets the data about a genre
+
+//Gets the data about a genre ***NOT WORKING
 app.use(bodyParser.json());
 app.get('/movies/:genre.Name', (req, res) => {
-    res.send('Successful GET request returning data on the details on one genre');
+    Movies.find({ "Genre.Name": req.params.genre })
+    .then((genre) => {
+      res.json(genre);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send('Error: ' + err);
+    });
 });
 
 
-
-//gets data about director 
+//gets data about director ***NOT WORKING
 app.use(bodyParser.json());
-app.get('/movies/:director', (req, res) => {
-    Movies.find({ "Director.Name": req.params.Director.Name })
+app.get('/movies/:director.Name', (req, res) => {
+    Movies.find({ "Director.Name": req.params.director })
       .then((Director) => {
         res.json(Director);
       })
@@ -204,7 +210,7 @@ app.get('/movies/:director', (req, res) => {
       });
   });
 
-*/
+
 
 
 //add new users
@@ -259,23 +265,62 @@ app.get('/users/:Username', (req, res) => {
 
 //allows users to update info: username 
 app.use(bodyParser.json());
-app.put('/users/', (req, res) => {
-    res.send('Successful PUT request updating user details');
-});
+app.put('/users/:Username', (req, res) => {
+    Users.findOneAndUpdate({ Username: req.params.Username }, { $set:
+        {
+          Username: req.body.Username,
+          Password: req.body.Password,
+          Email: req.body.Email,
+          Birthday: req.body.Birthday
+        }
+      },
+      { new: true }, // This line makes sure that the updated document is returned
+      (err, updatedUser) => {
+        if(err) {
+          console.error(err);
+          res.status(500).send('Error: ' + err);
+        } else {
+          res.json(updatedUser);
+        }
+      });
+    });
 
 
 
 //adds data to users favourite movies 
 app.use(bodyParser.json());
-app.put('/users/:movies', (req, res) => {
-    res.send('Successful PUT request updating user details');
-});
+app.post('/users/:Username/Movies/:MovieID', (req, res) => {
+    Users.findOneAndUpdate({ Username: req.params.Username }, {
+       $push: { FavoriteMovies: req.params.MovieID }
+     },
+     { new: true }, // This line makes sure that the updated document is returned
+    (err, updatedUser) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send('Error: ' + err);
+      } else {
+        res.json(updatedUser);
+      }
+    });
+  });
 
 //removes data from users favourite movies by title 
 app.use(bodyParser.json());
-app.delete('/user/:title', (req, res) => {
-    res.send('Successful DELETE request deleting movie data from users favourites');
-});
+app.delete('/users/:Username/Movies/:MovieID', (req, res) => {
+    Users.findOneAndUpdate({ Username: req.params.Username }, {
+        $pull: { FavoriteMovies: req.params.MovieID }
+      },
+      { new: true }, // This line makes sure that the updated document is returned
+     (err, updatedUser) => {
+       if (err) {
+         console.error(err);
+         res.status(500).send('Error: ' + err);
+       } else {
+         res.json(updatedUser);
+       }
+     });
+   });
+    
 
 
 //delete user 
