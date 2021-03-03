@@ -185,7 +185,7 @@ app.get('/movies/:Title', (req, res) => {
 
 //Gets the data about a genre ***NOT WORKING
 app.use(bodyParser.json());
-app.get('/movies/:genre.Name', (req, res) => {
+app.get('/movies/:genre', (req, res) => {
     Movies.find({ "Genre.Name": req.params.genre })
     .then((genre) => {
       res.json(genre);
@@ -199,10 +199,10 @@ app.get('/movies/:genre.Name', (req, res) => {
 
 //gets data about director ***NOT WORKING
 app.use(bodyParser.json());
-app.get('/movies/:director.Name', (req, res) => {
+app.get('/movies/:director', (req, res) => {
     Movies.find({ "Director.Name": req.params.director })
-      .then((Director) => {
-        res.json(Director);
+      .then((director) => {
+        res.json(director);
       })
       .catch((err) => {
         console.error(err);
