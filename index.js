@@ -186,7 +186,7 @@ app.get('/movies/:Title', (req, res) => {
 //Gets the data about a genre ***NOT WORKING
 app.use(bodyParser.json());
 app.get('/movies/:genre', (req, res) => {
-    Movies.find({ "Genre.Name": req.params.genre })
+    Movies.find({ "genre": req.params.genre })
     .then((genre) => {
       res.json(genre);
     })
@@ -200,7 +200,7 @@ app.get('/movies/:genre', (req, res) => {
 //gets data about director ***NOT WORKING
 app.use(bodyParser.json());
 app.get('/movies/:director', (req, res) => {
-    Movies.find({ "Director.Name": req.params.director })
+    Movies.find({ "Director": req.params.director })
       .then((director) => {
         res.json(director);
       })
@@ -323,12 +323,22 @@ app.delete('/users/:Username/Movies/:MovieID', (req, res) => {
     
 
 
-//delete user 
+//delete user by username
 app.use(bodyParser.json());
-app.delete('/user/:user/:email', (req, res) => {
-    res.send('Successful DELETE request deleting the users email');
+app.delete('/user/:Email', (req, res) => {
+    Users.findOneAndRemove({ Email: req.params.Email })
+    .then((user) => {
+      if (!user) {
+        res.status(400).send(req.params.Email + ' was not found');
+      } else {
+        res.status(200).send(req.params.Email + ' was deleted.');
+      }
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send('Error: ' + err);
+    });
 });
-
 
 app.use(express.static('public'));
 
