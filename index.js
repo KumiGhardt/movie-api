@@ -45,7 +45,7 @@ app.get('/movies', passport.authenticate('jwt', { session: false }), (req, res) 
 
 //get a list of all users
 app.use(bodyParser.json());
-app.get('/users', (req, res) => {
+app.get('/users', passport.authenticate('jwt', { session: false }), (req, res) => {
     Users.find()
     .then((users) => {
       res.status(201).json(users);
@@ -59,7 +59,7 @@ app.get('/users', (req, res) => {
 
 // Gets the data about a single movie, by name 
 app.use(bodyParser.json());
-app.get('/movies/:Title', (req, res) => {
+app.get('/movies/:Title', passport.authenticate('jwt', { session: false }), (req, res) => {
     Movies.findOne({ Title: req.params.Title })
       .then((Title) => {
         res.json(Title);
@@ -103,7 +103,7 @@ app.get('/movies/:director', (req, res) => {
 
 //add new users
 app.use(bodyParser.json());
-app.post('/users', (req, res) => {
+app.post('/users', passport.authenticate('jwt', { session: false }), (req, res) => {
     Users.findOne({
             Username: req.body.Username
         })
@@ -136,7 +136,7 @@ app.post('/users', (req, res) => {
 
 //get a user by username
 app.use(bodyParser.json());
-app.get('/users/:Username', (req, res) => {
+app.get('/users/:Username', passport.authenticate('jwt', { session: false }), (req, res) => {
     Users.findOne({
             Username: req.params.Username
         })
@@ -177,7 +177,7 @@ app.put('/users/:Username', (req, res) => {
 
 //adds data to users favourite movies 
 app.use(bodyParser.json());
-app.post('/users/:Username/Movies/:MovieID', (req, res) => {
+app.post('/users/:Username/Movies/:MovieID', passport.authenticate('jwt', { session: false }), (req, res) => {
     Users.findOneAndUpdate({ Username: req.params.Username }, {
        $push: { FavoriteMovies: req.params.MovieID }
      },
@@ -213,7 +213,7 @@ app.delete('/users/:Username/Movies/:MovieID', (req, res) => {
 
 //delete user by username
 app.use(bodyParser.json());
-app.delete('/user/:Email', (req, res) => {
+app.delete('/user/:Email', passport.authenticate('jwt', { session: false }), (req, res) => {
     Users.findOneAndRemove({ Email: req.params.Email })
     .then((user) => {
       if (!user) {
