@@ -6,130 +6,18 @@ const Models = require('./models.js');
 
 const app = express();
 app.use(bodyParser.json());
+let auth = require('./auth')(app);
 const Movies = Models.Movie;
 const Users = Models.User;
 
+//require the Passport module and import the “passport.js” file.
+const passport = require('passport');
+require('./passport');
 //his allows Mongoose to connect to that database so it can perform CRUD operations
 mongoose.connect('mongodb://localhost:27017/myFlixDB', {
     useNewUrlParser: true,
     useUnifiedTopology: true
 });
-
-/*
-//library
-let topMovies = [{
-        title: 'Gone with the Wind',
-        stars: ['Clark Gable', 'Vivien Leigh'],
-        director: 'Victor Fleming',
-        bio: ['Born: February 23, 1889 in La Cañada, California, USA', 'Died: January 6, 1949 (age 59) in Cottonwood, Arizona, USA'],
-        year: 1939,
-        rating: 8.1,
-        genre: ['Drama', 'History', 'Romance', 'War'],
-        synopsis: 'A manipulative woman and a roguish man conduct a turbulent romance during the American Civil War and Reconstruction periods.'
-    },
-    {
-        title: 'The Sound of Music',
-        stars: ['Julie Andrews', 'Christopher Plummer'],
-        director: 'Robert Wise',
-        bio: ['Born: September 10, 1914 in Winchester, Indiana, USA', 'Died: September 14, 2005 (age 91) in Los Angeles, California, USA'],
-        year: 1965,
-        rating: 8.0,
-        genre: ['Romance', 'Musical', 'Family', 'Drama', 'Biography'],
-        synopsis: 'A woman leaves an Austrian convent to become a governess to the children of a Naval officer widower.'
-    },
-    {
-        title: 'Black Panther',
-        stars: ['Chadwick Boseman', 'Michael B. Jordan'],
-        director: 'Ryan Coogler',
-        bio: ['Born: May 23, 1986 in Oakland, California, USA'],
-        year: 2018,
-        rating: 7.3,
-        genre: ['Action', 'Adventure', 'SciFi'],
-        synopsis: 'Prince T\'Challa returns home to the reclusive, technologically advanced African nation of Wakanda to serve as his country\'s new king. However, T\'Challa soon finds that he is challenged for the throne from factions within his own country. When two foes conspire to destroy Wakanda, the hero known as Black Panther must team up with C.I.A. agent Everett K. Ross and members of the Dora Milaje, Wakandan special forces, to prevent Wakanda from being dragged into a world war. '
-    },
-    {
-        title: 'Pride & Prejudice',
-        stars: ['Keira Knightley', 'Matthew Macfadyen'],
-        director: 'Joe Wright',
-        bio: ['August 25, 1972 in London, England, UK'],
-        year: 2005,
-        rating: 7.8,
-        genre: ['Drama', 'Romance'],
-        synopsis: 'Sparks fly when spirited Elizabeth Bennet meets single, rich, and proud Mr. Darcy. But Mr. Darcy reluctantly finds himself falling in love with a woman beneath his class. Can each overcome their own pride and prejudice?'
-    },
-    {
-        title: 'The Lord of the Rings: The Fellowship of the Ring',
-        stars: ['Elijah Wood', 'Ian McKellen'],
-        director: 'Peter Jackson',
-        bio: ['Born: October 31, 1961 in Pukerua Bay, North Island, New Zealand'],
-        year: 2001,
-        rating: 8.8,
-        genre: ['Action', 'Adventure', 'Drama', 'Fantasy'],
-        synopsis: 'A meek Hobbit from the Shire and eight companions set out on a journey to destroy the powerful One Ring and save Middle-earth from the Dark Lord Sauron.'
-    },
-
-    {
-        title: 'Breakfast at Tiffany\'s',
-        stars: ['Audrey Hepburn'],
-        director: 'Blake Edwards',
-        bio: ['Born: July 26, 1922 in Tulsa, Oklahoma, USA', 'Died: December 15, 2010 (age 88) in Santa Monica, California, USA'],
-        year: 1961,
-        rating: 7.6,
-        genre: ['Comedy', 'Drama', 'Romance'],
-        synopsis: 'A young New York socialite becomes interested in a young man who has moved into her apartment building, but her past threatens to get in the way.'
-    },
-
-    {
-        title: 'The Lord of the Rings: The Two Towers',
-        stars: ['Elijah Wood', 'Ian McKellen'],
-        director: 'Peter Jackson',
-        bio: ['Born: October 31, 1961 in Pukerua Bay, North Island, New Zealand'],
-        year: 2002,
-        rating: 8.7,
-        genre: ['Action', 'Adventure', 'Drama', 'Fantasy'],
-        synopsis: 'While Frodo and Sam edge closer to Mordor with the help of the shifty Gollum, the divided fellowship makes a stand against Sauron\'s new ally, Saruman, and his hordes of Isengard.'
-    },
-
-    {
-        title: 'The Lord of the Rings: The Return of the King',
-        stars: ['Elijah Wood', 'Ian McKellen'],
-        director: 'Peter Jackson',
-        bio: ['Born: October 31, 1961 in Pukerua Bay, North Island, New Zealand'],
-        year: 2003,
-        rating: 8.9,
-        genre: ['Action', 'Adventure', 'Drama', 'Fantasy'],
-        synopsis: 'Gandalf and Aragorn lead the World of Men against Sauron\'s army to draw his gaze from Frodo and Sam as they approach Mount Doom with the One Ring.'
-    },
-
-    {
-        title: 'Der Untergang',
-        stars: ['Bruno Ganz', 'Alexandra Maria Lara', 'Ulrich Matthes'],
-        director: 'Oliver Hirschbiegel',
-        bio: ['Born: December 29, 1957 in Hamburg, Germany'],
-        year: 2003,
-        rating: 8.2,
-        genre: [' Biography', 'Drama', ' History', ' War'],
-        synopsis: 'In April of 1945, Germany stands at the brink of defeat with the Soviet Armies closing in from the west and south. In Berlin, capital of the Third Reich, Adolf Hitler proclaims that Germany will still achieve victory and orders his Generals and advisers to fight to the last man.'
-    },
-
-    {
-        title: 'Im Keller',
-        stars: ['Friz Lang', 'Manfred Ellinger', 'Alfreda Klebinger'],
-        director: 'Ulrich Seidl',
-        bio: ['Born: November 24, 1952 in Vienna, Austria'],
-        year: 2014,
-        rating: 6.7,
-        genre: 'Documentary',
-        synopsis: 'A documentary that reveals what its subjects do in their respective basements.'
-    }
-
-];
-//users
-let users = [{
-    username: 'User Name',
-    email: 'username@email.com'
-}];
-*/
 
 
 app.use(morgan('common'));
@@ -144,7 +32,7 @@ app.get('/', (req, res) => {
 
 // Gets the list of data about ALL movies
 app.use(bodyParser.json());
-app.get('/movies', (req, res) => {
+app.get('/movies', passport.authenticate('jwt', { session: false }), (req, res) => {
     Movies.find()
     .then((movies) => {
       res.status(201).json(movies);
@@ -185,22 +73,22 @@ app.get('/movies/:Title', (req, res) => {
 
 //Gets the data about a genre ***NOT WORKING
 app.use(bodyParser.json());
-app.get('/movies/:genre', (req, res) => {
-    Movies.find({ "genre": req.params.genre })
-    .then((genre) => {
-      res.json(genre);
-    })
-    .catch((err) => {
-      console.error(err);
-      res.status(500).send('Error: ' + err);
-    });
-});
+app.get('/movies/:Genre', (req, res) => {
+    Movies.find({ Genre: req.params.Genre })
+      .then((Genre) => {
+        res.json(Genre);
+      })
+      .catch((err) => {
+        console.error(err);
+        res.status(500).send('Error: ' + err);
+      });
+  });
 
 
 //gets data about director ***NOT WORKING
 app.use(bodyParser.json());
 app.get('/movies/:director', (req, res) => {
-    Movies.find({ "Director": req.params.director })
+    Movies.find({ Director: req.params.Director })
       .then((director) => {
         res.json(director);
       })
@@ -221,7 +109,7 @@ app.post('/users', (req, res) => {
         })
         .then((user) => {
             if (user) {
-                return res.status(400).send(req.body.Username + 'already exists');
+                return res.status(400).send(req.body.Username + ' already exists');
             } else {
                 Users
                     .create({
