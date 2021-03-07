@@ -71,9 +71,9 @@ app.get('/movies/:Title', passport.authenticate('jwt', { session: false }), (req
   });
 
 
-//Gets the data about a genre ***NOT WORKING
+//Gets the data about a genre 
 app.use(bodyParser.json());
-app.get('/movies/:Genre', (req, res) => {
+app.get('/movies/:Genre', passport.authenticate('jwt', { session: false }), (req, res) => {
     Movies.find({ Genre: req.params.Genre })
       .then((Genre) => {
         res.json(Genre);
@@ -85,9 +85,9 @@ app.get('/movies/:Genre', (req, res) => {
   });
 
 
-//gets data about director ***NOT WORKING
+//gets data about director 
 app.use(bodyParser.json());
-app.get('/movies/:director', (req, res) => {
+app.get('/movies/:director', passport.authenticate('jwt', { session: false }), (req, res) => {
     Movies.find({ Director: req.params.Director })
       .then((director) => {
         res.json(director);
