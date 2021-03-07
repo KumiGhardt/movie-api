@@ -14,8 +14,16 @@ const Users = Models.User;
 //require the Passport module and import the “passport.js” file.
 const passport = require('passport');
 require('./passport');
-//his allows Mongoose to connect to that database so it can perform CRUD operations
+
+/*
+//This allows Mongoose to connect to that database so it can perform CRUD operations
 mongoose.connect('mongodb://localhost:27017/myFlixDB', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+});
+*/
+
+mongoose.connect('process.env.CONNECTION_URI', {
   useNewUrlParser: true,
   useUnifiedTopology: true
 });
