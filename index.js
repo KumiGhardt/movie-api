@@ -4,7 +4,10 @@ const morgan = require('morgan');
 const mongoose = require('mongoose');
 const Models = require('./models.js');
 const { check, validationResult } = require('express-validator');
+//to rectify (node:1720) UnhandledPromiseRejectionWarning: MongoParseError: Invalid connection string
+const dotenv = require('dotenv');
 
+dotenv.config();
 const app = express();
 app.use(bodyParser.json());
 let auth = require('./auth')(app);
@@ -23,7 +26,7 @@ mongoose.connect('mongodb://localhost:27017/myFlixDB', {
 });
 */
 
-mongoose.connect('process.env.CONNECTION_URI', {
+mongoose.connect(process.env.CONNECTION_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 });
@@ -53,6 +56,7 @@ app.get('/movies', passport.authenticate('jwt', {
       res.status(500).send('Error: ' + err);
     });
 });
+console.log(process.env.CONNECTION_URI);
 
 //get a list of all users
 app.use(bodyParser.json());
