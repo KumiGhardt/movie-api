@@ -10,10 +10,11 @@ const {
 //to rectify (node:1720) UnhandledPromiseRejectionWarning: MongoParseError: Invalid connection string
 const dotenv = require('dotenv');
 const cors = require('cors');
-app.use(cors());
+
 
 dotenv.config();
 const app = express();
+app.use(cors());
 app.use(bodyParser.json());
 let auth = require('./auth')(app);
 const Movies = Models.Movie;
