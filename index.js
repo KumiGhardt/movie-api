@@ -1,10 +1,12 @@
-
 const express = require("express");
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
 const Models = require('./models.js');
-const { check, validationResult } = require('express-validator');
+const {
+  check,
+  validationResult
+} = require('express-validator');
 //to rectify (node:1720) UnhandledPromiseRejectionWarning: MongoParseError: Invalid connection string
 const dotenv = require('dotenv');
 const cors = require('cors');
@@ -133,7 +135,9 @@ app.get('/movies/:directors/:DirectorName', passport.authenticate('jwt', {
 //add new users
 app.use(bodyParser.json());
 app.post('/users', [
-  check('Username', 'Username is required').isLength({min: 5}),
+  check('Username', 'Username is required').isLength({
+    min: 5
+  }),
   check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
   check('Password', 'Password is required').not().isEmpty(),
   check('Email', 'Email does not appear to be valid').isEmail()
@@ -142,7 +146,9 @@ app.post('/users', [
   let errors = validationResult(req);
 
   if (!errors.isEmpty()) {
-    return res.status(422).json({ errors: errors.array() });
+    return res.status(422).json({
+      errors: errors.array()
+    });
   }
 
   let hashedPassword = Users.hashPassword(req.body.Password);
@@ -300,6 +306,6 @@ app.use((err, req, res, next) => {
 
 // listen for requests
 const port = process.env.PORT || 8080;
-app.listen(port, '0.0.0.0',() => {
- console.log('Listening on Port ' + port);
+app.listen(port, '0.0.0.0', () => {
+  console.log('Listening on Port ' + port);
 });
