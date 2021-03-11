@@ -1,7 +1,4 @@
 
-const cors = require('cors');
-app.use(cors());
-
 const express = require("express");
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
@@ -10,6 +7,8 @@ const Models = require('./models.js');
 const { check, validationResult } = require('express-validator');
 //to rectify (node:1720) UnhandledPromiseRejectionWarning: MongoParseError: Invalid connection string
 const dotenv = require('dotenv');
+const cors = require('cors');
+app.use(cors());
 
 dotenv.config();
 const app = express();
