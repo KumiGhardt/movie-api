@@ -309,19 +309,19 @@ app.delete("/users/:Username/Movies/:MovieID", (req, res) => {
 //delete user by username
 app.use(bodyParser.json());
 app.delete(
-  "/user/:Email",
+  "/users/:Username",
   passport.authenticate("jwt", {
     session: false,
   }),
   (req, res) => {
     Users.findOneAndRemove({
-      Email: req.params.Email,
+      Username: req.params.Username,
     })
       .then((user) => {
         if (!user) {
-          res.status(400).send(req.params.Email + " was not found");
+          res.status(400).send(req.params.Username + " was not found");
         } else {
-          res.status(200).send(req.params.Email + " was deleted.");
+          res.status(200).send(req.params.Username + " was deleted.");
         }
       })
       .catch((err) => {
