@@ -20,14 +20,10 @@ const Users = Models.User;
 const passport = require("passport");
 require("./passport");
 
-/*
-//This allows Mongoose to connect to that database so it can perform CRUD operations
-mongoose.connect('mongodb://localhost:27017/myFlixDB', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-});
-*/
 
+/** 
+* This allows Mongoose to connect to that database so it can perform CRUD operations
+*/
 mongoose.connect(process.env.CONNECTION_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -37,13 +33,19 @@ app.use(morgan("common"));
 
 app.use("/documentation", express.static("public"));
 
-//get request
+/** 
+* Get request for landing page
+* @constructor
+* @param {string} return- Welcome to my movie index
+*/
 app.use(bodyParser.json());
 app.get("/", (req, res) => {
   res.send("Welcome to my movie index");
 });
 
-// Gets the list of data about ALL movies
+/** 
+* Gets the list of data about ALL movies
+*/
 app.use(bodyParser.json());
 app.get(
   "/movies",
@@ -61,7 +63,9 @@ app.get(
 );
 console.log(process.env.CONNECTION_URI);
 
-//get a list of all users
+/** 
+* get a list of all users
+*/
 app.use(bodyParser.json());
 app.get(
   "/users",
@@ -80,7 +84,9 @@ app.get(
   }
 );
 
-// Gets the data about a single movie, by name
+/** 
+* Gets the data about a single movie, by name
+*/
 app.use(bodyParser.json());
 app.get(
   "/movies/:Title",
@@ -101,7 +107,9 @@ app.get(
   }
 );
 
-//Gets the data about a genre
+/** 
+* Gets the data about a genre
+*/
 app.use(bodyParser.json());
 app.get(
   "/movies/:genres/:GenreName",
@@ -122,7 +130,9 @@ app.get(
   }
 );
 
-//gets data about director
+/** 
+* gets data about director
+*/
 app.use(bodyParser.json());
 app.get(
   "/movies/:directors/:DirectorName",
@@ -143,7 +153,9 @@ app.get(
   }
 );
 
-//add new users
+/** 
+* post to add new user
+*/
 app.use(bodyParser.json());
 app.post(
   "/users",
@@ -198,7 +210,9 @@ app.post(
   }
 );
 
-//get a user by username
+/**
+* get a user by username
+*/
 app.use(bodyParser.json());
 app.get(
   "/users/:Username",
@@ -219,7 +233,9 @@ app.get(
   }
 );
 
-//allows users to update info: username
+/**
+ * allows users to update info: username
+ */
 app.use(bodyParser.json());
 app.put("/users/:Username", (req, res) => {
   Users.findOneAndUpdate(
@@ -248,7 +264,9 @@ app.put("/users/:Username", (req, res) => {
   );
 });
 
-//adds data to users favourite movies
+/**
+ * adds data to users favourite movies
+*/
 app.use(bodyParser.json());
 app.post(
   "/users/:Username/Movies/:MovieID",
@@ -280,7 +298,9 @@ app.post(
   }
 );
 
-//removes data from users favourite movies by title
+/**
+ * removes data from users favourite movies by title
+*/
 app.use(bodyParser.json());
 app.delete("/users/:Username/Movies/:MovieID", (req, res) => {
   Users.findOneAndUpdate(
@@ -306,7 +326,9 @@ app.delete("/users/:Username/Movies/:MovieID", (req, res) => {
   );
 });
 
-//delete user by username
+/**
+ * delete user by username
+ */
 app.use(bodyParser.json());
 app.delete(
   "/users/:Username",
